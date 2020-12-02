@@ -27,15 +27,48 @@
 
       <div class="col-md-9">
 
-        <div id="graf" class="vizprev"></div>
+        <div id="graf" class="vizprev">
+          <h1>Encabezado 1</h1>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam iusto modi illo, facilis in porro laboriosam, unde rerum id cupiditate dicta cumque debitis magnam! Quia neque inventore nisi illum nemo!</p>
+          <button onclick="toggle()">Cambio de Fondo</button>
+        </div>
 
       </div>
 
     </div>
   </div>
 
-
+  <script src="/js/d3.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  <script>
+    // d3.selectAll('h1')
+    //   .style('color', 'red')
+
+    // d3.select('.vizprev')
+    //   .style('padding', '10px')
+
+    // d3.select('#graf')
+    //   .style('background-color', 'yellow')
+
+    claro = true
+
+    function toggle() {
+      claro = !claro
+
+      if (claro) {
+        d3.select('#graf')
+          .style('background-color', 'black')
+          .style('color', 'white')
+      } else {
+        d3.select('#graf')
+          .style('background-color', 'white')
+          .style('color', 'black')
+      }
+    }
+
+  </script>
+
 </body>
 </html>

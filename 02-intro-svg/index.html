@@ -27,7 +27,14 @@
 
       <div class="col-md-9">
 
-        <div id="graf" class="vizprev"></div>
+        <div id="graf" class="vizprev">
+          <svg width="100%" height="400">
+            <circle id="c" cx="300" cy="200" r="50" fill="red" stroke="black" stroke-width="3"></circle>
+            <rect x="20" y="20" width="50" height="100" fill="green"></rect>
+            <line x1="0" y1="400" x2="300" y2="200" stroke="blue" stroke-width="5"></line>
+          </svg>
+        </div>
+        <button onclick="cambio()">Mover</button>
 
       </div>
 
@@ -37,5 +44,16 @@
   <script src="/js/d3.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  <script>
+    function cambio() {
+
+      d3.select('#c')
+        .attr('cx', Math.floor((Math.random()*500)+10))
+        .attr('cy', Math.floor((Math.random()*300)+10))
+        .attr('r',  Math.floor((Math.random()*30)+10))
+    }
+  </script>
+
 </body>
 </html>
