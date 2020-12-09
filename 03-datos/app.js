@@ -14,7 +14,18 @@ svg = graf.append('svg')
           .style('width', `${ ancho_total }px`)
           .style('height', `${ alto_total }px`)
 
-dataArray = [10, 20, 23, 12, 18, 25, 32, 28]
+// dataArray = [10, 20, 23, 12, 18, 25, 32, 28]
+
+dataArray = [
+  { valor: 10, color: 'red' },
+  { valor: 20, color: 'green' },
+  { valor: 23, color: 'blue' },
+  { valor: 12, color: 'orange' },
+  { valor: 18, color: 'yellow' },
+  { valor: 25, color: 'teal' },
+  { valor: 32, color: '#cc0000' },
+  { valor: 28, color: '#00cc00' },
+]
 
 // III. render (update o dibujo)
 function render(data) {
@@ -25,9 +36,10 @@ function render(data) {
   bars.enter()
       .append('rect')
       .style('width', 50)
-      .style('height', d => d * 5 )
+      .style('height', d => d.valor * 5 )
       .style('x', (d, i) => 50 + i * 70)
       .style('y', 0)
+      .style('fill', d => d.color)
 
   // function(d, i) { return d }
   // (d, i) => d
