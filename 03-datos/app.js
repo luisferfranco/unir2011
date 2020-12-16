@@ -35,10 +35,10 @@ function render(data) {
 
   bars.enter()
       .append('rect')
-      .style('width', 50)
-      .style('height', d => d.valor * 5 )
-      .style('x', (d, i) => 50 + i * 70)
-      .style('y', 0)
+      .style('width', '50px')
+      .style('height', d => (d.valor * 5) + 'px')
+      .style('x', (d, i) => (50 + i * 70) + 'px')
+      .style('y', '0px')
       .style('fill', d => d.color)
 
   // function(d, i) { return d }
