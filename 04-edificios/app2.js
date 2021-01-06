@@ -64,19 +64,17 @@ function render(data) {
 
   bars.enter()
       .append('rect')
-      // c. Ancho de las barras usando el escalador x
-      // .style('width', '50px')
-      .style('width', d => `${x.bandwidth()}px`)
-      .style('height', d => (alto - y(d.oficial)) + 'px')
-
-      // c. El valor x donde se debe poner la barra correctamente
-      // .style('x', (d, i) => (50 + i * 70) + 'px')
-      .style('x', d => x(d.edificio) + 'px')
-      .style('y', d => (y(d.oficial)) + 'px')
-
-      // h. Vamos a usar el escalador que se llama "color"
-      // .style('fill', d => d.color)
-      .style('fill', d => color(d.region))
+        .style('width', '0px')
+        .style('height', '0px')
+        .style('y', `${y(0)}px`)
+        .style('fill', '#000')
+        .style('x', d => x(d.edificio) + 'px')
+      .transition()
+      .duration(1500)
+        .style('y', d => (y(d.oficial)) + 'px')
+        .style('height', d => (alto - y(d.oficial)) + 'px')
+        .style('fill', d => color(d.region))
+        .style('width', d => `${x.bandwidth()}px`)
 
       // j. call que sirve para crear los ejes
       yAxisCall = d3.axisLeft(y)

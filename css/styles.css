@@ -17,3 +17,13 @@
   border: 1px solid #888;
 }
 
+.eje {
+  font-family: 'Roboto Condensed';
+  font-size: 14px;
+}
+
+.titulo-grafica {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  font-size: 20px;
+}
