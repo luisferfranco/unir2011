@@ -70,6 +70,8 @@ function render(data) {
         .style('fill', '#000')
         .style('x', d => x(d.edificio) + 'px')
       .transition()
+      // https://bl.ocks.org/d3noob/1ea51d03775b9650e8dfd03474e202fe
+      .ease(d3.easeElastic)
       .duration(1500)
         .style('y', d => (y(d.oficial)) + 'px')
         .style('height', d => (alto - y(d.oficial)) + 'px')

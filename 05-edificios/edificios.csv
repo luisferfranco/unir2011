@@ -1,0 +1,51 @@
+puesto,edificio,ciudad,pais,oficial,antena,ultimopiso,piso,ano,region
+1,Burj Khalifa,Dubái,Emiratos Árabes Unidos,828,830,585,163,2010,Golfo Pérsico
+2,Torre de Shanghai,Shanghai,China,632,632,561,128,2015,Asia
+3,Abraj Al Bait,La Meca,Arabia Saudita,601,601,494,120,2012,Golfo Pérsico
+4,Ping An Finance Center,Shenzhen,China,599,599,562,115,2017,Asia
+5,Lotte World Tower,Seúl,Corea del Sur,555,556,498,124,2017,Asia
+6,One World Trade Center,Nueva York,Estados Unidos,541,546,387,94,2014,América
+7,CTF Finance Centre,Guangzhou,China,530,530,495,111,2016,Asia
+8,Taipei 101,Taipéi,China,508,508,438,101,2004,Asia
+9,Shanghai World Financial Center,Shanghai,China,492,494,474,101,2008,Asia
+10,International Commerce Centre,Ḥong Kong,China,484,484,469,118,2010,Asia
+11,Torres Petronas (Torre 1),Kuala Lumpur,Malasia,452,452,375,88,1998,Asia
+11,Torres Petronas (Torre 2),Kuala Lumpur,Malasia,452,452,375,88,1998,Asia
+13,Torre Nanjing Zifeng,Nanjing,China,450,450,317,66,2010,Asia
+14,Torre Willis,Chicago,Estados Unidos,442,527,413,108,1974,América
+15,Kingkey 100,Shenzhen,China,442,442,427,100,2011,Asia
+16,Guangzhou International Finance Center,Guangzhou,China,439,439,415,103,2010,Asia
+17,Wuhan Center [n. 1],Wuhan,China,438,438,438,88,2017,Asia
+18,Marina 101 [n. 1],Dubái,Emiratos Árabes Unidos,427,427,375,101,2017,Golfo Pérsico
+19,432 Park Avenue,Nueva York,Estados Unidos,426,426,392,85,2015,América
+20,Trump International Hotel and Tower,Chicago,Estados Unidos,423,423,340,98,2009,América
+21,Jin Mao,Shanghai,China,421,421,348,88,1999,Asia
+22,Princess Tower,Dubái,Emiratos Árabes Unidos,413,414,357,101,2012,Golfo Pérsico
+23,Al Hamra Tower,Kuwait,Kuwait,413,413,371,80,2011,Golfo Pérsico
+24,Two International Finance Centre,Ḥong Kong,China,412,412,388,88,2003,Asia
+25,23 Marina,Dubái,Emiratos Árabes Unidos,392,392,314,88,2012,Golfo Pérsico
+26,CITIC Plaza,Guangzhou,China,390,390,297,80,1996,Asia
+27,Capital Market Authority Headquarters [n. 1],Riyad,Arabia Saudita,385,385,385,76,2017,Golfo Pérsico
+28,Shun Hing Square,Shenzhen,China,384,384,298,69,1996,Asia
+29,Dalian Eton Center,Dalian,China,383,383,340,80,2015,Asia
+30,Burj Mohammed Bin Rashid,Abu Dhabi,Emiratos Árabes Unidos,381,381,352,88,2014,Golfo Pérsico
+31,Empire State Building,Nueva York,Estados Unidos,381,443,373,102,1931,América
+32,Elite Residence,Dubái,Emiratos Árabes Unidos,381,381,315,87,2012,Golfo Pérsico
+33,Central Plaza,Ḥong Kong,China,374,374,299,78,1992,Asia
+34,Bashnya Federatsiya [n. 1],Moscú,Rusia,374,374,374,95,2016,Este Europeo
+35,Dalian International Trade Center [n. 1],Dalian,China,370,370,370,86,2016,Asia
+36,The Address the BLVD [n. 1],Dubái,Emiratos Árabes Unidos,368,368,368,72,2016,Golfo Pérsico
+37,Bank of China Tower,Ḥong Kong,China,367,367,288,72,1989,Asia
+38,Bank of America Tower,Nueva York,Estados Unidos,366,366,235,55,2009,América
+39,Almes Tower,Dubái,Emiratos Árabes Unidos,360,360,279,68,2008,Golfo Pérsico
+40,JW Marriott Marquis 1,Dubái,Emiratos Árabes Unidos,355,355,298,82,2012,Golfo Pérsico
+41,JW Marriott Marquis 2,Dubái,Emiratos Árabes Unidos,355,355,298,82,2013,Golfo Pérsico
+42,Emirates Tower One,Dubái,Emiratos Árabes Unidos,355,355,241,56,2000,Golfo Pérsico
+43,Torre Oko,Moscú,Rusia,354,354,322,85,2015,Este Europeo
+44,The Torch,Dubái,Emiratos Árabes Unidos,352,352,300,86,2011,Golfo Pérsico
+45,Forum 66,Shenyang,China,351,351,294,68,2015,Asia
+46,The Pinnacle,Guangzhou,China,350,350,264,60,2012,Asia
+47,Tuntex Sky Tower,Kaohsiung,China,348,378,341,85,1997,Asia
+48,Aon Center (Chicago),Chicago,Estados Unidos,346,363,328,83,1973,América
+49,The Center,Ḥong Kong,China,346,346,275,73,1998,Asia
+50,Xiamen Cross Strait Financial Centre [n. 1],Xiamen,China,344,344,308,68,2017,Asia
