@@ -27,3 +27,8 @@
   font-weight: bold;
   font-size: 20px;
 }
+
+.ejes line {
+  stroke: #bbbbbb;
+  stroke-width: 1px;
+}

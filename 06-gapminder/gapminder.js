@@ -44,7 +44,7 @@ g.append('rect')
   .attr('fill', 'none')
 
 // Escaladores
-x = d3.scaleLinear().range([0, ancho])
+x = d3.scaleLog().range([0, ancho])
 y = d3.scaleLinear().range([alto, 0])
 r = d3.scaleLinear().range([10, 100])
 
@@ -56,6 +56,13 @@ years = []
 iyear = 0
 maxy  = 0
 miny  = 50000
+continente = 'todos'
+corriendo  = true
+
+var interval
+
+contSelect = d3.select('#continente')
+botonPausa = d3.select('#pausa')
 
 d3.csv('gapminder.csv').then((data) => {
   data.forEach((d) => {
@@ -89,26 +96,129 @@ d3.csv('gapminder.csv').then((data) => {
   r.domain([d3.min(data, d => d.population),
             d3.max(data, d => d.population)])
 
+  // Ejes
+  xAxis = d3.axisBottom(x)
+            .ticks(10)
+            .tickFormat(d => d3.format(',d')(d))
+  xAxisG = d3.axisBottom(x)
+            .ticks(10)
+            .tickFormat('')
+            .tickSize(-alto)
+
+  yAxis = d3.axisLeft(y)
+            .ticks(10)
+  yAxisG = d3.axisLeft(y)
+            .ticks(10)
+            .tickFormat('')
+            .tickSize(-ancho)
+
+  g.append('g')
+    .call(xAxis)
+    .attr('transform', `translate(0,${alto})`)
+  g.append('g')
+    .call(yAxis)
+
+  g.append('g')
+    .attr('class', 'ejes')
+    .call(xAxisG)
+    .attr('transform', `translate(0,${alto})`)
+  g.append('g')
+    .attr('class', 'ejes')
+    .call(yAxisG)
+
+  contSelect.append('option')
+              .attr('value', 'todos')
+              .text('Todos')
+  color.domain().forEach(d => {
+    contSelect.append('option')
+                .attr('value', d)
+                .text(d)
+  })
+
   frame()
+  interval = d3.interval(() => delta(1), 300)
 })
 
 function frame() {
-  iyear = years[7]
-  data = d3.filter(datos, d => d.year == iyear)
+  year = years[iyear]
+  data = d3.filter(datos, d => d.year == year)
+  data = d3.filter(data, d => {
+    if (continente == 'todos')
+      return true
+    else
+      return d.continent == continente
+  })
 
   render(data)
 }
 
 function render(data) {
-  yearDisplay.text(iyear)
+  yearDisplay.text(years[iyear])
 
   p = g.selectAll('circle')
-        .data(data)
+        .data(data, d => d.country)
 
   p.enter()
     .append('circle')
-    .attr('cx', d => x(d.income))
-    .attr('cy', d => y(d.life_exp))
-    .attr('r', d => r(d.population))
-    .attr('fill', d => color(d.continent))
+      .attr('r', 0)
+      .attr('cx', d => x(d.income))
+      .attr('cy', d => y(d.life_exp))
+      .attr('fill', '#005500')
+    .merge(p)
+      .transition().duration(300)
+      .attr('cx', d => x(d.income))
+      .attr('cy', d => y(d.life_exp))
+      .attr('r', d => r(d.population))
+      .attr('fill', d => color(d.continent))
+
+  p.exit()
+    .transition().duration(300)
+    .attr('r', 0)
+    .attr('fill', '#ff0000')
+    .remove()
 }
+
+// function atras() {
+//   iyear--
+//   if (iyear < 0) iyear = 0
+//   frame()
+// }
+
+// function adelante() {
+//   iyear++
+//   if (iyear == years.lenght) iyear = years.lenght
+//   frame()
+// }
+
+// Refactoring de las funciones de arriba
+// DRY Don't Repeat Yourself
+
+function delta(d) {
+  iyear += d
+  if (iyear < 0) iyear = 0
+  if (iyear > years.length-1) iyear = years.length-1
+  frame()
+}
+
+contSelect.on('change', () => {
+  continente = contSelect.node().value
+  frame()
+})
+
+botonPausa.on('click', () => {
+  corriendo = !corriendo
+  if (corriendo) {
+    botonPausa
+      .classed('btn-danger', true)
+      .classed('btn-success', false)
+      .html('<i class="fas fa-pause-circle"></i>')
+      interval = d3.interval(() => delta(1), 300)
+  } else {
+    botonPausa
+      .classed('btn-danger', false)
+      .classed('btn-success', true)
+      .html('<i class="fas fa-play-circle"></i>')
+    interval.stop()
+  }
+})
+
