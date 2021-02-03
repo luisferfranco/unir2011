@@ -7,9 +7,9 @@ ancho_total = graf.style('width').slice(0, -2)
 alto_total  = ancho_total * 0.5625
 margins = {
   top: 30,
-  left: 50,
+  left: 20,
   right: 15,
-  bottom: 120
+  bottom: 20
 }
 ancho = ancho_total - margins.left - margins.right
 alto  = alto_total - margins.top - margins.bottom
@@ -43,12 +43,20 @@ g.append('rect')
   .attr('stroke', 'black')
   .attr('fill', 'none')
 
+g.append('clipPath')
+  .attr('id', 'clip')
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', ancho)
+    .attr('height', alto)
+
 // Escaladores
 x = d3.scaleLog().range([0, ancho])
 y = d3.scaleLinear().range([alto, 0])
 r = d3.scaleLinear().range([10, 100])
 
-color = d3.scaleOrdinal().range(d3.schemeAccent)
+color = d3.scaleOrdinal().range(['#f94144', '#f8961e', '#90be6d', '#577590'])
 
 // Variables Globales
 datos = []
@@ -63,6 +71,7 @@ var interval
 
 contSelect = d3.select('#continente')
 botonPausa = d3.select('#pausa')
+slider     = d3.select('#slider');
 
 d3.csv('gapminder.csv').then((data) => {
   data.forEach((d) => {
@@ -85,6 +94,10 @@ d3.csv('gapminder.csv').then((data) => {
   // data = data.filter((d) => (d.income > 0) && (d.life_exp > 0))
 
   datos = data
+
+  slider.attr('min', 0)
+        .attr('max', years.length - 1)
+  slider.node().value = 0
 
   // El dominio para el escalador ordinal
   color.domain(d3.map(data, d => d.continent))
@@ -135,6 +148,31 @@ d3.csv('gapminder.csv').then((data) => {
                 .text(d)
   })
 
+  // Leyenda
+  g.append('rect')
+    .attr('x', ancho - 210)
+    .attr('y', alto - 160)
+    .attr('width', 200)
+    .attr('height', 150)
+    .attr('stroke', 'black')
+    .attr('fill', '#dedede')
+
+  color.domain().forEach((d, i) => {
+    g.append('rect')
+      .attr('x', ancho - 200)
+      .attr('y', alto - 150 + i*35)
+      .attr('width', 20)
+      .attr('height', 20)
+      .attr('fill', color(d))
+
+    g.append('text')
+      .attr('x', ancho - 175)
+      .attr('y', alto - 135 + i*35)
+      .attr('fill', 'black')
+      .text(d[0].toUpperCase() + d.slice(1))
+  })
+
+
   frame()
   interval = d3.interval(() => delta(1), 300)
 })
@@ -149,6 +187,7 @@ function frame() {
       return d.continent == continente
   })
 
+  slider.node().value = iyear
   render(data)
 }
 
@@ -164,6 +203,9 @@ function render(data) {
       .attr('cx', d => x(d.income))
       .attr('cy', d => y(d.life_exp))
       .attr('fill', '#005500')
+      .attr('clip-path', 'url(#clip)')
+      .attr('stroke', '#333333')
+      .attr('fill-opacity', 0.75)
     .merge(p)
       .transition().duration(300)
       .attr('cx', d => x(d.income))
@@ -195,8 +237,10 @@ function render(data) {
 
 function delta(d) {
   iyear += d
-  if (iyear < 0) iyear = 0
-  if (iyear > years.length-1) iyear = years.length-1
+  console.log(iyear)
+
+  if (iyear < 0) iyear = years.length-1
+  if (iyear > years.length-1) iyear = 0
   frame()
 }
 
@@ -222,3 +266,16 @@ botonPausa.on('click', () => {
   }
 })
 
+slider.on('input', () => {
+  // d3.select('#sliderv').text(slider.node().value)
+  iyear = +slider.node().value
+  frame()
+})
+
+slider.on('mousedown', () => {
+  if (corriendo) interval.stop()
+})
+
+slider.on('mouseup', () => {
+  if (corriendo) interval = d3.interval(() => delta(1), 300)
+})

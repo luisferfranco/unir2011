@@ -19,6 +19,8 @@
   <div class="container-fluid mt-4">
 
     <div class="row mb-4">
+
+      <!-- botones -->
       <div class="col-md-4">
         <button class="btn btn-primary" onclick="delta(-5)">
           <i class="fas fa-arrow-circle-left"></i>
@@ -36,11 +38,22 @@
           <i class="fas fa-arrow-circle-right"></i>
         </button>
       </div>
-      <div class="col-md-4">Columna 2</div>
+      <!-- /botones -->
+
+      <!-- slider -->
+      <div class="col-md-4">
+        <input type="range" min="0" max="100" value="80" class="slider" id="slider">
+        <br><span class="badge badge-success p-2" id="sliderv"></span>
+      </div>
+      <!-- /slider -->
+
+      <!-- continente -->
       <div class="col-md-4">
         Continente:
         <select id="continente" class="form-control"></select>
       </div>
+      <!-- /continente -->
+
     </div>
 
     <div class="row mb-4">
