@@ -24,6 +24,40 @@ g = svg.append('g')
         .attr('width', ancho + 'px')
         .attr('height', alto + 'px')
 
+svg.append("rect")
+        .attr("transform", "translate(" + margins.left + "," + margins.top + ")")
+        // .attr("class", "overlay")
+        .attr('fill', 'black')
+        .attr('fill-opacity', 0.25)
+        .attr("width", ancho)
+        .attr("height", alto)
+        .on("mouseover", function() { focus.style("display", null); })
+        .on("mouseout", function() { focus.style("display", "none"); })
+        .on("mousemove", e => mousemove(e))
+
+focus = g.append("g")
+        .attr("class", "focus")
+        .style("display", "none")
+
+focus.append("line")
+        .attr("class", "x-hover-line hover-line")
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('y2', 0)
+
+
+focus.append("line")
+        .attr("class", "y-hover-line hover-line")
+        .attr("x1", 0)
+        .attr("x2", ancho);
+
+focus.append("circle")
+        .attr("r", 7.5)
+
+focus.append("text")
+        .attr("x", 15)
+      	.attr("dy", ".31em");
+
 // Escaladores
 x = d3.scaleTime().range([0, ancho])
 y = d3.scaleLinear().range([alto, 0])
@@ -45,6 +79,8 @@ lineaGen = d3.line()
               .x(d => x(d.Date))
               .y(d => y(d.Close))
 linea = g.append('path')
+
+var data
 
 // parser para fechas
 //
@@ -82,6 +118,8 @@ function load(symbol='amzn') {
           .duration(500)
           .call(yAxisCall.scale(y))
 
+    this.data = data
+
     render(data, symbol)
   })
 }
@@ -99,4 +137,29 @@ load()
 
 function cambio() {
   load(d3.select('#stock').node().value)
+}
+
+function mousemove(e) {
+  // console.log(`${d3.pointer(e)}`)
+
+  // Este artículo explica bien que es un bisector y la
+  // filosofía tras el:
+  // https://stackoverflow.com/questions/26882631/d3-what-is-a-bisector
+
+  x0 = x.invert(d3.pointer(e)[0])
+
+  bisectDate = d3.bisector((d) => d.Date).left
+  i = bisectDate(data, x0, 1)
+  console.log(`${x0} = ${i}`)
+
+  d0 = data[i - 1],
+  d1 = data[i],
+  d = x0 - d0.Date > d1.Date - x0 ? d1 : d0;
+
+
+  focus.attr("transform", "translate(" + x(d.Date) + "," + y(d.Close) + ")");
+  focus.select("text").text(function() { return d.Close; });
+  focus.select(".x-hover-line").attr("x2", -x(d.Date))
+  focus.select(".y-hover-line").attr("y2", alto - y(d.Close))
+    .attr('y2', 0)
 }
