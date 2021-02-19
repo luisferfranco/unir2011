@@ -40,14 +40,14 @@ focus = g.append("g")
         .style("display", "none")
 
 focus.append("line")
-        .attr("class", "x-hover-line hover-line")
+        .attr("class", "y-hover-line hover-line")
         .attr('x1', 0)
         .attr('y1', 0)
         .attr('y2', 0)
 
 
 focus.append("line")
-        .attr("class", "y-hover-line hover-line")
+        .attr("class", "x-hover-line hover-line")
         .attr("x1", 0)
         .attr("x2", ancho);
 
@@ -161,5 +161,4 @@ function mousemove(e) {
   focus.select("text").text(function() { return d.Close; });
   focus.select(".x-hover-line").attr("x2", -x(d.Date))
   focus.select(".y-hover-line").attr("y2", alto - y(d.Close))
-    .attr('y2', 0)
 }
