@@ -41,12 +41,14 @@ focus = g.append("g")
 
 focus.append("line")
         .attr("class", "x-hover-line hover-line")
+        .attr('x1', 0)
         .attr('y1', 0)
-        .attr('y2', alto)
+        .attr('y2', 0)
+
 
 focus.append("line")
         .attr("class", "y-hover-line hover-line")
-        .attr("x1", ancho)
+        .attr("x1", 0)
         .attr("x2", ancho);
 
 focus.append("circle")
@@ -157,6 +159,7 @@ function mousemove(e) {
 
   focus.attr("transform", "translate(" + x(d.Date) + "," + y(d.Close) + ")");
   focus.select("text").text(function() { return d.Close; });
-  focus.select(".x-hover-line").attr("y2", alto - y(d.Close))
-  focus.select(".y-hover-line").attr("x2", ancho + ancho)
+  focus.select(".x-hover-line").attr("x2", -x(d.Date))
+  focus.select(".y-hover-line").attr("y2", alto - y(d.Close))
+    .attr('y2', 0)
 }
