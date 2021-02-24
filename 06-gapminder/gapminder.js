@@ -51,6 +51,45 @@ g.append('clipPath')
     .attr('width', ancho)
     .attr('height', alto)
 
+tip = g.append('g')
+        .attr('id', 'tip')
+        .attr('display', 'none')
+        .attr('transform', `translate(${ancho/2}, ${alto/2})`)
+
+tip.append('rect')
+    .attr('width', 170)
+    .attr('height', 30)
+    .attr('fill', 'white')
+    .attr('stroke', 'black')
+    .attr('clip-path', 'url(#clip)')
+
+tip.append('text')
+    .attr('id', '_pais')
+    .attr('x', 75)
+    .attr('y', 20)
+    .attr('stroke', 'black')
+    .attr('text-anchor', 'middle')
+    .text('China')
+    .attr('clip-path', 'url(#clip)')
+
+tip.append('rect')
+    .attr('y', 30)
+    .attr('width', 170)
+    .attr('height', 35)
+    .attr('fill', '#666666')
+    .attr('stroke', 'black')
+    .attr('clip-path', 'url(#clip)')
+
+tip.append('text')
+    .attr('id', '_poblacion')
+    .attr('x', 5)
+    .attr('y', 50)
+    .attr('stroke', '#ffcc00')
+    .text('Población: 1,000,000')
+    .attr('clip-path', 'url(#clip)')
+
+
+
 // Escaladores
 x = d3.scaleLog().range([0, ancho])
 y = d3.scaleLinear().range([alto, 0])
@@ -206,6 +245,8 @@ function render(data) {
       .attr('clip-path', 'url(#clip)')
       .attr('stroke', '#333333')
       .attr('fill-opacity', 0.75)
+      .on('mouseover', (event, d) => showtip(event, d, true))
+      .on('mouseout', (event, d) => showtip(event, d, false))
     .merge(p)
       .transition().duration(300)
       .attr('cx', d => x(d.income))
@@ -279,3 +320,24 @@ slider.on('mousedown', () => {
 slider.on('mouseup', () => {
   if (corriendo) interval = d3.interval(() => delta(1), 300)
 })
+
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
+
+function showtip(e, d, mostrar) {
+
+  d3.select('#tip').moveToFront()
+
+  if (mostrar) {
+    d3.select('#tip').attr('display', null)
+    d3.select('#_pais').text(d.country)
+    d3.select('#_poblacion').text(d.population)
+    d3.select('#tip')
+      .attr('transform', `translate(${x(d.income)}, ${y(d.life_exp)})`)
+  } else {
+    d3.select('#tip').attr('display', 'none')
+  }
+}

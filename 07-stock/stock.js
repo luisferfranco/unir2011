@@ -41,22 +41,15 @@ focus = g.append("g")
 
 focus.append("line")
         .attr("class", "y-hover-line hover-line")
-        .attr('x1', 0)
-        .attr('y1', 0)
-        .attr('y2', 0)
-
-
 focus.append("line")
         .attr("class", "x-hover-line hover-line")
-        .attr("x1", 0)
-        .attr("x2", ancho);
 
 focus.append("circle")
         .attr("r", 7.5)
 
 focus.append("text")
         .attr("x", 15)
-      	.attr("dy", ".31em");
+        .attr("dy", ".31em");
 
 // Escaladores
 x = d3.scaleTime().range([0, ancho])
@@ -155,7 +148,6 @@ function mousemove(e) {
   d0 = data[i - 1],
   d1 = data[i],
   d = x0 - d0.Date > d1.Date - x0 ? d1 : d0;
-
 
   focus.attr("transform", "translate(" + x(d.Date) + "," + y(d.Close) + ")");
   focus.select("text").text(function() { return d.Close; });
