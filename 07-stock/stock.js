@@ -75,6 +75,11 @@ linea = g.append('path')
 
 var data
 
+var slider = d3
+  .sliderHorizontal()
+  .fill('#2196f3')
+  .displayValue(false)
+
 // parser para fechas
 //
 // documentación de formato:
@@ -90,40 +95,57 @@ function load(symbol='amzn') {
       d.Close = +d.Close
       d.Date = parser(d.Date)
     })
-    console.log(data)
 
-    x.domain(d3.extent(data, d => d.Date))
-    // Esto es equivalente a...
-    // x.domain([d3.min(data, d => d.Date),
-    //           d3.max(data, d => d.Date)])
-
-    // y.domain(d3.extent(data, d => d.Close))
-    y.domain([
-      d3.min(data, d => d.Close) * 0.95,
-      d3.max(data, d => d.Close) * 1.05
-    ])
-
-    // Ejes
-    xAxis.transition()
-          .duration(500)
-          .call(xAxisCall.scale(x))
-    yAxis.transition()
-          .duration(500)
-          .call(yAxisCall.scale(y))
+    minx = d3.min(data, d => d.Date)
+    maxx = d3.max(data, d => d.Date)
 
     this.data = data
+
+    slider
+      .min(minx)
+      .max(maxx)
+      .step(1)
+      .width(300)
+      .default([minx, maxx])
+      .on('onchange', (val) => {
+        render(data, symbol)
+      })
+
+    d3.select('#slider-svg').remove()
+    d3.select('#slider')
+      .append('svg')
+      .attr('id', 'slider-svg')
+      .attr('width', 500)
+      .attr('height', 100)
+      .append('g')
+      .attr('transform', 'translate(30,30)')
+      .call(slider)
 
     render(data, symbol)
   })
 }
 
 function render(data, symbol) {
+
+  data = d3.filter(data, d => {
+    return d.Date >= slider.value()[0] && d.Date <= slider.value()[1]
+  })
+
+  x.domain(d3.extent(data, d => d.Date))
+  y.domain([
+    d3.min(data, d => d.Close) * 0.95,
+    d3.max(data, d => d.Close) * 1.05
+  ])
+
   linea.attr('fill', 'none')
         .attr('stroke-width', 3)
-        .transition()
-        .duration(500)
         .attr('stroke', color(symbol))
         .attr('d', lineaGen(data))
+
+  // Ejes
+  xAxis.call(xAxisCall.scale(x))
+  yAxis.call(yAxisCall.scale(y))
+
 }
 
 load()
